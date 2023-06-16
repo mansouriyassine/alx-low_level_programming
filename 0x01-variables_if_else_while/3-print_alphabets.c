@@ -16,7 +16,6 @@ while (alpha <= 'z')
 putchar(alpha);
 alpha++;
 }
-putchar('\n');
 
 while (BETA <= 'Z')
 {
