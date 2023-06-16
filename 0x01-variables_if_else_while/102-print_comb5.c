@@ -6,7 +6,7 @@
  * Return: Always 0 (Success)
  *
  */
-int main()
+int main(void)
 {
 for (int i = 0; i <= 99; i++)
 {
