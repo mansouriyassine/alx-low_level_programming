@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 /** 
-* main - print the alphabet
-*
-* Return : always 0.
-*
-*/
+ * main - print the alphabet
+ *
+ * Return: Always 0 (Success)
+ *
+ */
 int main(void)
 {
 char alpha = 'a';
