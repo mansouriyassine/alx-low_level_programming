@@ -9,19 +9,16 @@
 int main(void)
 {
 char alpha = 'a';
-char BETA = 'A';
 
 while (alpha <= 'z')
 {
+if (alpha != 'e' && alpha != 'q')
+{
 putchar(alpha);
+}
 alpha++;
 }
 
-while (BETA <= 'Z')
-{
-putchar(BETA);
-BETA++;
-}
 putchar('\n');
 
 return (0);
