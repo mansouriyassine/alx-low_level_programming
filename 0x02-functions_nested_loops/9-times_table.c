@@ -13,7 +13,6 @@ for (i = 0; i<= 9; i++)
 for (j = 0; j<= 9; j++)
 {       
 int A = i * j;
-int A = i * j;
 if (A <= 9)
 {
 if (j != 0)
