@@ -22,7 +22,7 @@ printf("0");
 }
 else
 {
-return (-);
+return (-1);
 printf("-");
 }
 }
