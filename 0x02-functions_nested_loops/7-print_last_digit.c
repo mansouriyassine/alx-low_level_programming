@@ -7,9 +7,9 @@
  *
  * Return: nothing
  */
-void print_last_digit(int n)
+int print_last_digit(int n)
 {
-char a = n % 10;
+int a = n % 10;
 
 _putchar(a + '0');
 }
