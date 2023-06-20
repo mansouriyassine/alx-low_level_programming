@@ -14,23 +14,18 @@ if (n < 98)
 {
 for (i = n ; i <= 98; i++)
 {
-_putchar(i + '0');
-_putchar(',');
-_putchar(' ');
+printf("%d, ", i);
 }
 }
 else if (n == 98)
 {
-_putchar('9');
-_putchar('8');
+printf("98");
 }
 else
 {
 for (i = n ; i >= 98; i--)
 {
-_putchar(i + '0');
-_putchar(',');
-_putchar(' ');
+printf("%d, ", i);
 }
 }
 }
