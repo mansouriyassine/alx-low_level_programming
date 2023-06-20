@@ -2,11 +2,12 @@
 
 /**
  * _abs - Computes the absolute value of a number
+ *
  * @n: the number to check
  *
  * Return: n if positive, -n if negative
  */
-int _abs(int)
+int _abs(int n)
 {
 if (n >= 0)
 {
