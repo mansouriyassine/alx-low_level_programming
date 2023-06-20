@@ -8,9 +8,9 @@
  *
  * Return: result
  */
-int add (int i, int j)
+int add(int i, int j)
 
 {
 int a = i + j;
-return(a);
+return (a);
 }
