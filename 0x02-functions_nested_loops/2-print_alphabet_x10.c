@@ -13,9 +13,9 @@ while (j<=10)
 {
 while (i <= 'z')
 {
-putchar(i);
+_putchar(i);
 i++;
-putchar('\n');
+_putchar('\n');
 }
 i = 'a';
 j++;
