@@ -21,12 +21,12 @@ _putchar(' ');
 }
 else if (n == 98)
 {
-_putchar(98)
-_putchar(98)
+_putchar(9);
+_putchar(8);
 }
 else
 {
-for (i =n ;i >= 98; i--);
+for (i =n ; i >= 98; i--);
 {
 _putchar(i + '0');
 _putchar(',');
