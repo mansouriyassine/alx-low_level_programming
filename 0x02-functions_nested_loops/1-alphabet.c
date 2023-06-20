@@ -5,9 +5,9 @@
  *
  * Return : nothing
  */
-void print_alphabet(void);
+void print_alphabet(void)
 {
-char LETTER = 'a'
+char LETTER = 'a';
 
 while (LETTER <= 'z')
 {
