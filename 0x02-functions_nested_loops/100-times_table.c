@@ -18,8 +18,7 @@ for (A = 0; A <= n; A++)
 for (B = 0; B <= n; B++)
 {
 C = A * B;
-
-if (C > 99)
+if (99 < C)
 {
 _putchar(',');
 _putchar(' ');
@@ -27,7 +26,7 @@ _putchar((C / 100) + '0');
 _putchar(((C / 10) % 10) + '0');
 _putchar((C % 10) + '0');
 }
-else if (C > 9)
+else if (9 < C)
 {
 _putchar(',');
 _putchar(' ');
