@@ -3,22 +3,22 @@
 /**
  * print_times_table - prints 10 times tables
  *
- *@n: the number in the input
+ * @n: the number in the input
  *
  * Return: nothing
  */
 void print_times_table(int n)
 {
 int A, B, C;
-  
-if (14 >= n && n >= 0)
+
+if (n >= 0 && n <= 14)
 {
 for (A = 0; A <= n; A++)
 {
 for (B = 0; B <= n; B++)
 {
 C = A * B;
-        
+
 if (C > 99)
 {
 _putchar(',');
@@ -51,4 +51,3 @@ _putchar('\n');
 }
 }
 }
-
