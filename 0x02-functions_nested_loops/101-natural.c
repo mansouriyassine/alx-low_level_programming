@@ -19,5 +19,5 @@ S += i;
 
 printf("%d\n", S);
 
-return(0);
+return (0);
 }
