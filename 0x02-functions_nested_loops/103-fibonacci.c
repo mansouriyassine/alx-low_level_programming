@@ -8,7 +8,7 @@
 int main(void)
 {
 unsigned long int a = 1;
-insigned long int b = 2;
+unsigned long int b = 2;
 unsigned long int next, S = 0;
 
 while (a <= 4000000)
