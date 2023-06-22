@@ -24,3 +24,10 @@ _putchar('\n');
 }
 _putchar('\n');
 }
+
+int main()
+{
+int n = 5;
+print_diagonal(n);
+return 0;
+}
