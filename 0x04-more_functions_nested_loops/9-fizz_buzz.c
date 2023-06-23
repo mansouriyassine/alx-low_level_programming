@@ -1,35 +1,41 @@
-#include <stdio.h>
 #include "main.h"
+#include <stdio.h>
 
 /**
-*main - program that prints fizz or buzz or fizzBuzz
-*
-*Return: returns 0
-*/
+  * main - Prints Fizz Buzz
+  *
+  * Return: Always 0 (Success)
+  */
 int main(void)
 {
 int i;
 
 for (i = 1; i <= 100; i++)
 {
-if (i % 3 == 0 && i % 5 == 0)
+if ((i % 3 == 0) && (i % 5 == 0))
 {
-printf("FizzBuzz ");
+printf("FizzBuzz");
 }
 else if (i % 3 == 0)
 {
-printf("Fizz ");
+printf("Fizz");
 }
 else if (i % 5 == 0)
 {
-printf("Buzz ");
+printf("Buzz");
 }
 else
 {
-printf("%d ", i);
+printf("%d", i);
+}
+
+if (i != 100)
+{
+printf(" ");
 }
 }
 
 printf("\n");
+
 return (0);
 }
