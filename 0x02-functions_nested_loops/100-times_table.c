@@ -8,7 +8,7 @@ void print_times_table(int n)
 {
 int A, B, C;
 
-if (0 <= n && n <= 15)
+if (0 <= n && 15 >= n)
 {
 for (A = 0; A <= n; A++)
 {
