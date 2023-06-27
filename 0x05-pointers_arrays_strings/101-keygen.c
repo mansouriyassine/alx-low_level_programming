@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define PASSWORD_LENGTH 8
+#define PASSWORD_LENGTH 15
 
 /**
  * main - program that generates random valid
@@ -10,7 +10,6 @@
  *
  * Return: Always 0 (Success)
  */
-
 int main(void)
 {
 char password[PASSWORD_LENGTH + 1];
@@ -28,4 +27,3 @@ password[PASSWORD_LENGTH] = '\0';
 printf("%s", password);
 
 return (0);
-}
