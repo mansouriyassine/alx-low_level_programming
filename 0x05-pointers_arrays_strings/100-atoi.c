@@ -8,25 +8,39 @@
  */
 int _atoi(char *s)
 {
-int i = 0;
-int sign = 1;
-int result = 0;
+int index, negativeCount, result, stringLength, foundNumber, currentDigit;
 
-while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-i++;
+index = 0;
+negativeCount = 0;
+result = 0;
+stringLength = 0;
+foundNumber = 0;
+currentDigit = 0;
 
-if (s[i] == '-' || s[i] == '+')
+while (s[stringLength] != '\0')
+stringLength++;
+
+while (index < stringLength && foundNumber == 0)
 {
-sign = (s[i] == '-') ? -1 : 1;
-i++;
+if (s[index] == '-')
+++negativeCount;
+
+if (s[index] >= '0' && s[index] <= '9')
+{
+currentDigit = s[index] - '0';
+if (negativeCount % 2)
+currentDigit = -currentDigit;
+result = result * 10 + currentDigit;
+foundNumber = 1;
+if (s[index + 1] < '0' || s[index + 1] > '9')
+break;
+foundNumber = 0;
+}
+index++;
 }
 
+if (foundNumber == 0)
+return (0);
 
-while (s[i] >= '0' && s[i] <= '9')
-{
-result = result * 10 + (s[i] - '0');
-i++;
-}
-
-return (sign *result);
+return (result);
 }
