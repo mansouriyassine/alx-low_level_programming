@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 /**
  * main - program that generates random valid
@@ -10,12 +11,12 @@
  */
 int main(void)
 {
-char password[100];
+char password[15] = "Tada! Congrats";
 int i, ascii_code;
 
 srand(time(NULL));
 
-for (i = 0; i < 100; i++)
+for (i = 0; i < 15; i++)
 {
 ascii_code = rand() % 94 + 33;
 
