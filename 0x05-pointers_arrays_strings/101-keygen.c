@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
+
+#define PASSWORD_LENGTH 8
 
 /**
  * main - program that generates random valid
@@ -9,24 +10,22 @@
  *
  * Return: Always 0 (Success)
  */
+
 int main(void)
 {
-char password[15] = "Tada! Congrats";
-int i, ascii_code;
+char password[PASSWORD_LENGTH + 1];
+int i;
 
 srand(time(NULL));
 
-for (i = 0; i < 15; i++)
+for (i = 0; i < PASSWORD_LENGTH; i++)
 {
-ascii_code = rand() % 94 + 33;
-
-if (ascii_code == 96)
-ascii_code++;
-
-password[i] = (char)ascii_code;
+password[i] = '!' + (rand() % 94);
 }
 
-printf("%s\n", password);
+password[PASSWORD_LENGTH] = '\0';
+
+printf("%s", password);
 
 return (0);
 }
