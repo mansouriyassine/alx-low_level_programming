@@ -25,9 +25,10 @@ if (s[i] >= '0' && s[i] <= '9')
 {
 int digit = s[i] - '0';
 
-if (result < INT_MIN / 10 || (result == INT_MIN / 10 && digit > -(INT_MIN % 10)))
+if (result < INT_MIN / 10
+|| (result == INT_MIN / 10 && digit > -(INT_MIN % 10)))
 {
-return INT_MIN;
+return (INT_MIN);
 }
 
 result = result * 10 - digit;
@@ -38,5 +39,5 @@ break;
 }
 i++;
 }
-return (result * sign);
+return (result *sign);
 }
