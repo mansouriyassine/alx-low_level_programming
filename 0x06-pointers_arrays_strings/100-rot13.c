@@ -1,24 +1,24 @@
 #include "main.h"
 
 /**
- * leet - Encodes a string into 1337
+ * rot13 - Encodes a string using ROT13
  * @str: The string to be encoded
  *
  * Return: A pointer to the resulting string.
  */
-char *leet(char *str)
+char *rot13(char *str)
 {
 int i, j;
-char letters[] = "AEOTL";
-char leet[] = "43071";
+char input[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+char output[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
 for (i = 0; str[i] != '\0'; i++)
 {
-for (j = 0; letters[j] != '\0'; j++)
+for (j = 0; input[j] != '\0'; j++)
 {
-if (str[i] == letters[j] || str[i] == letters[j] + 32)
+if (str[i] == input[j])
 {
-str[i] = leet[j];
+str[i] = output[j];
 break;
 }
 }
