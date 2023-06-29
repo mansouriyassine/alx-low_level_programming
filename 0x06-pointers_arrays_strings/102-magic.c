@@ -1,16 +1,16 @@
-#include "main.h"
+#include <stdio.h>
 
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
 int main(void)
 {
-int a[] = {98, 198, 298, 398, 498};
-int *p = &a[2];
+int n;
+int a[5];
+int *p;
 
-_printf("a[2] = %d\n", *p);
+a[2] = 1024;
+p = &n;
 
+*(&a[2] - 2) = 98;
+
+printf("a[2] = %d\n", a[2]);
 return (0);
 }
