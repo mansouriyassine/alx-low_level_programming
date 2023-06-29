@@ -26,4 +26,3 @@ n %= divisor;
 divisor /= 10;
 }
 }
-
