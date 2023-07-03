@@ -5,18 +5,18 @@
  * @s: Pointer to the string
  * @accept: Pointer to the accept string
  *
- * Return: (unsigned int) Number of bytes in the initial
- * segment of s consisting only of bytes from accept
+ * Return: (unsigned int) Number of bytes in the initial segment of s consisting only of bytes from accept
  */
 unsigned int _strspn(char *s, char *accept)
 {
 unsigned int count = 0;
 int found = 1;
+int i;
 
 while (*s && found)
 {
 found = 0;
-for (int i = 0; accept[i]; i++)
+for (i = 0; accept[i]; i++)
 {
 if (*s == accept[i])
 {
