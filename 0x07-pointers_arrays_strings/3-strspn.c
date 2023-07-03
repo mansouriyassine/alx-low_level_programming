@@ -5,7 +5,9 @@
  * @s: Pointer to the string
  * @accept: Pointer to the accept string
  *
- * Return: (unsigned int) Number of bytes in the initial segment of s consisting only of bytes from accept
+ * Return: (unsigned int) Number of bytes in the
+ * initial segment of s consisting only of bytes
+ * from accept
  */
 unsigned int _strspn(char *s, char *accept)
 {
