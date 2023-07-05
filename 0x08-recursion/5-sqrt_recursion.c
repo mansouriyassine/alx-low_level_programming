@@ -17,7 +17,7 @@ return (-1);
 if (n == 0 || n == 1)
 return (n);
 
-return (sqrt_recursive_helper(n, 0, n));
+return (sqrt_recursive_helper(n, 1, n));
 }
 
 /**
@@ -35,16 +35,15 @@ int mid;
 
 if (start <= end)
 {
-mid = (start + end) / 2;
+mid = start + (end - start) / 2;
 
-if (mid *mid == n)
-return (mid);
-
-if (mid *mid < n)
-return (sqrt_recursive_helper(n, mid + 1, end));
-else
+if (mid > n / mid)
 return (sqrt_recursive_helper(n, start, mid - 1));
+else if (mid *mid == n)
+return (mid);
+else if (mid *mid < n)
+return (sqrt_recursive_helper(n, mid + 1, end));
 }
 
-return (sqrt_recursive_helper(n, start, end - 1));
+return (-1);
 }
