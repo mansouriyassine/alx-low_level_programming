@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h>
 
 int is_palindrome_helper(char *s, int start, int end);
 
