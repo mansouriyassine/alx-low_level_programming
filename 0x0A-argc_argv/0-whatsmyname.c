@@ -7,7 +7,7 @@
  */
 void print_program_name(char *program_name)
 {
-printf("%s\n", program_name);
+    printf("%s\n", program_name);
 }
 
 /**
@@ -17,7 +17,7 @@ printf("%s\n", program_name);
  *
  * Return: Always 0 (Success)
  */
-int main(int argc, char *argv[])
+int main(int argc __attribute__((unused)), char *argv[])
 {
 print_program_name(argv[0]);
 
