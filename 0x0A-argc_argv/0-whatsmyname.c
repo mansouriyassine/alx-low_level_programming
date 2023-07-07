@@ -2,24 +2,15 @@
 #include "main.h"
 
 /**
- * print_program_name - prints the name of the program
- * @program_name: name of the program
- */
-void print_program_name(char *program_name)
-{
-    printf("%s\n", program_name);
-}
-
-/**
- * main - entry point of the program
- * @argc: number of command-line arguments
- * @argv: array of command-line arguments
+ * main - prints the name of a program
+ * @argc: arguments number
+ * @argv: arguments array
  *
  * Return: Always 0 (Success)
  */
 int main(int argc __attribute__((unused)), char *argv[])
 {
-print_program_name(argv[0]);
+printf("%s\n", *argv);
 
 return (0);
 }
