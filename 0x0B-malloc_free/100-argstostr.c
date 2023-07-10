@@ -12,7 +12,7 @@
 char *argstostr(int ac, char **av)
 {
 char *concat;
-int i, j, len = 0, total_len = 0;
+int i, len = 0, total_len = 0;
 int arg_len;
 
 if (ac == 0 || av == NULL)
