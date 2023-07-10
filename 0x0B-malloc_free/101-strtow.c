@@ -9,7 +9,8 @@ void free_words(char **words, int word_count);
  * strtow - Splits a string into words.
  * @str: The string to be split
  *
- * Return: A pointer to an array of strings (words), or NULL if str is NULL or str is ""
+ * Return: A pointer to an array of strings (words),
+ * or NULL if str is NULL or str is ""
  */
 char **strtow(char *str)
 {
