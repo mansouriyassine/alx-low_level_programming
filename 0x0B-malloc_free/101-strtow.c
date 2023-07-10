@@ -54,6 +54,12 @@ words[j] = NULL;
 return (words);
 }
 
+/**
+ * count_words - Counts the number of words in a string.
+ * @str: The string to be counted
+ *
+ * Return: The number of words in the string
+ */
 int count_words(char *str)
 {
 int count = 0;
@@ -69,6 +75,12 @@ i++;
 return (count);
 }
 
+/**
+ * word_length - Calculates the length of a word.
+ * @str: The string containing the word
+ *
+ * Return: The length of the word
+ */
 int word_length(char *str)
 {
 int length = 0;
@@ -79,6 +91,11 @@ length++;
 return (length);
 }
 
+/**
+ * free_words - Frees the memory allocated for an array of words.
+ * @words: The array of words
+ * @word_count: The number of words in the array
+ */
 void free_words(char **words, int word_count)
 {
 int i;
