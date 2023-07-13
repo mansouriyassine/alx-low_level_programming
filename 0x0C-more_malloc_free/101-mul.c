@@ -2,48 +2,103 @@
 #include <stdlib.h>
 
 /**
- * multiply - Multiplies two positive numbers
- *
- * @num1: The first number
- * @num2: The second number
- *
- * Return: The result of the multiplication
+ * _isdigit - Checks if a character is a digit (0 through 9)
+ * @c: The character to be checked
+ * Return: 1 if c is a digit, 0 otherwise
  */
-int multiply(int num1, int num2)
+int _isdigit(char c)
 {
-return (num1 * num2);
+return (c >= '0' && c <= '9');
 }
 
 /**
- * main - Entry point of the program
- *
+ * multiply - Multiplies two positive numbers
+ * @num1: The first number
+ * @num2: The second number
+ */
+void multiply(char *num1, char *num2)
+{
+int len1 = 0, len2 = 0, i, j, carry, n1, n2, sum;
+int *result;
+
+while (num1[len1] != '\0')
+{
+if (!_isdigit(num1[len1]))
+{
+printf("Error\n");
+exit(98);
+}
+len1++;
+}
+
+while (num2[len2] != '\0')
+{
+if (!_isdigit(num2[len2]))
+{
+printf("Error\n");
+exit(98);
+}
+len2++;
+}
+
+result = malloc(sizeof(int) * (len1 + len2));
+if (result == NULL)
+{
+printf("Error\n");
+exit(98);
+}
+
+for (i = 0; i < len1 + len2; i++)
+result[i] = 0;
+
+for (i = len1 - 1; i >= 0; i--)
+{
+carry = 0;
+n1 = num1[i] - '0';
+
+for (j = len2 - 1; j >= 0; j--)
+{
+n2 = num2[j] - '0';
+sum = (n1 * n2) + result[i + j + 1] + carry;
+carry = sum / 10;
+result[i + j + 1] = sum % 10;
+}
+
+if (carry > 0)
+result[i + j + 1] += carry;
+}
+
+i = 0;
+while (result[i] == 0 && i < len1 + len2)
+i++;
+
+if (i == len1 + len2)
+printf("0\n");
+else
+{
+for (; i < len1 + len2; i++)
+printf("%d", result[i]);
+printf("\n");
+}
+
+free(result);
+}
+
+/**
+ * main - Entry point
  * @argc: The argument count
  * @argv: The argument vector
- *
- * Return: 0 on success, 98 on incorrect input
+ * Return: 0 on success, 98 on failure
  */
 int main(int argc, char *argv[])
 {
-int num1, num2, result;
-
 if (argc != 3)
 {
 printf("Error\n");
 return (98);
 }
 
-num1 = atoi(argv[1]);
-num2 = atoi(argv[2]);
-
-if (num1 <= 0 || num2 <= 0)
-{
-printf("Error\n");
-return (98);
-}
-
-result = multiply(num1, num2);
-
-printf("%d\n", result);
+multiply(argv[1], argv[2]);
 
 return (0);
 }
