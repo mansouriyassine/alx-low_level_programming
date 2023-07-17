@@ -13,15 +13,18 @@
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
+dog_t *cutie_dog;
+int name_len, owner_len;
+
 if (name == NULL || owner == NULL)
 return (NULL);
 
-dog_t *cutie_dog = malloc(sizeof(dog_t));
+cutie_dog = malloc(sizeof(dog_t));
 if (cutie_dog == NULL)
 return (NULL);
 
-int name_len = strlen(name);
-int owner_len = strlen(owner);
+name_len = strlen(name);
+owner_len = strlen(owner);
 
 cutie_dog->name = malloc(name_len + 1);
 if (cutie_dog->name == NULL)
