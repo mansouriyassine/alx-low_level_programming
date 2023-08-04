@@ -19,9 +19,9 @@ while (*b)
 if (*b != '0' && *b != '1')
 return (0);
 
-result = result << 1; /* Left shift the current result by 1 bit */
+result = result << 1;
 if (*b == '1')
-result = result | 1; /* OR with 1 if the current bit is 1 */
+result = result | 1;
 
 b++;
 }
