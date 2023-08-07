@@ -37,8 +37,7 @@ return (fd);
 static int read_write_file(int fd_from, int fd_to)
 {
 char buffer[BUFSIZE];
-int bytes_read;
-int bytes_written;
+int bytes_read, bytes_written;
 
 while ((bytes_read = read(fd_from, buffer, BUFSIZE)) > 0)
 {
@@ -82,7 +81,7 @@ if (fd_from == -1)
 return (-1);
 }
 
-fd_to = open_file(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+fd_to = open_file(argv[2], O_WRONLY | O_CREAT | O_TRUNC);
 if (fd_to == -1)
 {
 close(fd_from);
