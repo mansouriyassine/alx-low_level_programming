@@ -1,89 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-
-#define BUFSIZE 1024
-
-int open_file(const char *filename, int mode);
-int read_write_file(int fd_from, int fd_to);
+#include "main.h"
 
 /**
- * main - Copies the content of a file to another file.
- * @argc: The number of arguments passed to the program.
- * @argv: An array of strings containing the arguments.
- *
- * Return: 0 on success, or exit with the appropriate error code on failure.
- */
+* main - program that copies the content of a file to another file
+* @argc: num argument
+* @argv: string argument
+* Return: 0
+*/
+
 int main(int argc, char *argv[])
 {
-int fd_from, fd_to;
+int file_from, file_to;
+ssize_t num_read, num_written;
+char buf[1024];
 
 if (argc != 3)
+fprintf(stderr, "Usage: cp file_from file_to\n");
+file_from = open(argv[1], O_RDONLY);
+if (file_from == -1)
 {
-dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
-exit(97);
-}
-
-fd_from = open_file(argv[1], O_RDONLY);
-fd_to = open_file(argv[2], O_WRONLY | O_CREAT | O_TRUNC);
-
-read_write_file(fd_from, fd_to);
-
-if (close(fd_from) == -1 || close(fd_to) == -1)
-{
-dprintf(STDERR_FILENO, "Error: Can't close fd\n");
-exit(100);
-}
-
-return (0);
-}
-
-/**
- * open_file - Opens a file and returns the file descriptor.
- * @filename: The name of the file to open.
- * @mode: The mode to open the file in.
- *
- * Return: The file descriptor on success, or -1 on failure.
- */
-int open_file(const char *filename, int mode)
-{
-int fd = open(filename, mode, 0644);
-if (fd == -1)
-{
-dprintf(STDERR_FILENO, "Error: Can't open file %s\n", filename);
+fprintf(stderr, "Error: Can't read from file %s\n", argv[1]);
 exit(98);
 }
-return (fd);
+file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+if (file_to == -1)
+{
+fprintf(stderr, "Error: Can't write to %s\n", argv[2]);
+close(file_from);
+exit(99);
 }
-
-/**
- * read_write_file - Reads from one file and writes to another file.
- * @fd_from: The file descriptor for the source file.
- * @fd_to: The file descriptor for the destination file.
- *
- * Return: 0 on success, or -1 on failure.
- */
-int read_write_file(int fd_from, int fd_to)
+while ((num_read = read(file_from, buf, 1024)) > 0)
 {
-char buffer[BUFSIZE];
-ssize_t bytes_read, bytes_written;
-
-while ((bytes_read = read(fd_from, buffer, BUFSIZE)) > 0)
+num_written = write(file_to, buf, num_read);
+if (num_written < num_read)
 {
-bytes_written = write(fd_to, buffer, bytes_read);
-if (bytes_written == -1 || bytes_written != bytes_read)
-{
-dprintf(STDERR_FILENO, "Error: Can't write to file\n");
+fprintf(stderr, "Error: Can't write to %s\n", argv[2]);
+close(file_from);
+close(file_to);
 exit(99);
 }
 }
-
-if (bytes_read == -1)
+if (num_read == -1)
 {
-dprintf(STDERR_FILENO, "Error: Can't read from file\n");
+fprintf(stderr, "Error: Can't read from file %s\n", argv[1]);
+close(file_from);
+close(file_to);
 exit(98);
 }
+
+if (close(file_from) == -1)
+fprintf(stderr, "Error: Can't close fd %d\n", file_from);
+
+if (close(file_to) == -1)
+fprintf(stderr, "Error: Can't close fd %d\n", file_to);
 
 return (0);
 }
