@@ -1,62 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <unistd.h>
 #include <fcntl.h>
-#include <elf.h>
-#include <string.h>
+#include <unistd.h>
+#include <stddef.h>
 
-void error_exit(const char *message) {
-    fprintf(stderr, "Error: %s\n", message);
-    exit(98);
-}
-
-void display_info(Elf64_Ehdr *header) {
-    int i;
-    printf("Magic: ");
-    for (i = 0; i < SELFMAG; ++i) {
-        printf("%02x ", header->e_ident[i]);
-    }
-    printf("\n");
-
-    printf("Class: %s\n", (header->e_ident[EI_CLASS] == ELFCLASS32) ? "ELF32" : "ELF64");
-    printf("Data: %s\n", (header->e_ident[EI_DATA] == ELFDATA2LSB) ? "2's complement, little-endian" : "Unknown");
-    printf("Version: %d\n", header->e_ident[EI_VERSION]);
-    printf("OS/ABI: %s\n", (header->e_ident[EI_OSABI] == ELFOSABI_SYSV) ? "UNIX System V ABI" : "Unknown");
-    printf("ABI Version: %d\n", header->e_ident[EI_ABIVERSION]);
-    printf("Type: %s\n", (header->e_type == ET_EXEC) ? "EXEC (Executable)" :
-                     (header->e_type == ET_DYN) ? "DYN (Shared object)" :
-                     (header->e_type == ET_REL) ? "REL (Relocatable)" : "Unknown");
-    printf("Entry point address: 0x%lx\n", (unsigned long)header->e_entry);
-}
+#define ELF_MAGIC 0x7f454c46
 
 int main(int argc, char *argv[]) {
-    const char *filename;
-    int fd;
-    Elf64_Ehdr elf_header;
+  int fd;
+  unsigned char magic[4];
 
-    if (argc != 2) {
-        error_exit("Usage: elf_header elf_filename");
-    }
+  if (argc != 2) {
+    fprintf(stderr, "Usage: elf_header elf_filename\n");
+    exit(1);
+  }
 
-    filename = argv[1];
-    fd = open(filename, O_RDONLY);
-    if (fd == -1) {
-        error_exit("Failed to open file");
-    }
+  fd = open(argv[1], O_RDONLY);
+  if (fd == -1) {
+    perror("open");
+    exit(1);
+  }
 
-    if (read(fd, &elf_header, sizeof(elf_header)) != sizeof(elf_header)) {
-        close(fd);
-        error_exit("Failed to read ELF header");
-    }
+  if (read(fd, magic, sizeof(magic)) != sizeof(magic)) {
+    perror("read");
+    exit(1);
+  }
 
-    if (memcmp(elf_header.e_ident, ELFMAG, SELFMAG) != 0) {
-        close(fd);
-        error_exit("Not an ELF file");
-    }
+  printf("ELF Header:\n");
+  printf("  Magic:   %02x %02x %02x %02x\n", magic[0], magic[1], magic[2], magic[3]);
+  printf("  Class:                             %d\n", magic[4]);
+  printf("  Data:                             %d\n", magic[5]);
+  printf("  Version:                           %d\n", magic[6]);
+  printf("  OS/ABI:                           %d\n", magic[7]);
+  printf("  ABI Version:                       %d\n", magic[8]);
+  printf("  Type:                             %d\n", magic[9]);
+  printf("  Entry point address:               %#x\n", *(unsigned int *)(magic + 10));
 
-    display_info(&elf_header);
-
-    close(fd);
-    return 0;
+  close(fd);
+  return 0;
 }
