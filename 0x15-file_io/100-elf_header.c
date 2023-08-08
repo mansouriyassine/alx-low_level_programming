@@ -2,76 +2,84 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <elf.h>
+#include <string.h>
+
+#define ELF_MAGIC "\x7f\x45\x4c\x46"
 
 /**
- * display_error - Displays an error message to
- * stderr and exits with status 98.
- * @message: The error message to display.
+ * open_and_check - Opens a file and checks if it's an ELF file.
+ * @filename: The name of the file to open and check.
+ * Return: The file descriptor if successful, exits with an error code if not.
  */
-void display_error(const char *message)
-{
-fprintf(stderr, "%s\n", message);
-exit(98);
-}
+int open_and_check(const char *filename);
 
 /**
- * read_header - Reads the ELF header from the file descriptor.
- * @fd: The file descriptor of the ELF file.
- * @header: A pointer to the ELF header struct to fill.
+ * print_elf_header - Prints the ELF header information.
+ * @magic: The magic number identifying the ELF file.
+ * Return: None.
  */
-void read_header(int fd, Elf64_Ehdr *header)
-{
-ssize_t bytes_read = read(fd, header, sizeof(Elf64_Ehdr));
+void print_elf_header(unsigned char *magic);
 
-if (bytes_read != sizeof(Elf64_Ehdr))
-display_error("Error: Unable to read ELF header");
-}
-
-/**
- * print_elf_header - Prints the information contained
- * in the ELF header.
- * @header: The ELF header struct to print.
- */
-void print_elf_header(Elf64_Ehdr header)
-{
-int i;
-printf("ELF Header:\n");
-printf("  Magic:   ");
-for (i = 0; i < EI_NIDENT; i++)
-printf("%02x ", header.e_ident[i]);
-printf("\n");
-printf("  Class:  %s\n", (header.e_ident[EI_CLASS] == ELFCLASS64) ? "ELF64" : "ELF32");
-printf("  Data:   %s\n", (header.e_ident[EI_DATA] == ELFDATA2LSB) ? "2's complement, little endian" : "2's complement, big endian");
-printf("  Version:  %d (current)\n", header.e_ident[EI_VERSION]);
-printf("  OS/ABI:  %s\n", (header.e_ident[EI_OSABI] == ELFOSABI_SYSV) ? "UNIX - System V" : "UNKNOWN");
-printf("  ABI Version: %d\n", header.e_ident[EI_ABIVERSION]);
-printf("  Type:  %d (Executable file)\n", header.e_type);
-printf("  Entry point address:   0x%lx\n", header.e_entry);
-}
-
-/**
- * main - Entry point of the program.
- * @argc: The number of arguments passed to the program.
- * @argv: An array of strings containing the arguments.
- *
- * Return: 0 on success, or exit with status code 98 on failure.
- */
 int main(int argc, char *argv[])
 {
 int fd;
-Elf64_Ehdr header;
+unsigned char magic[4];
+
 if (argc != 2)
 {
-display_error("Usage: elf_header elf_filename");
+fprintf(stderr, "Usage: %s elf_filename\n", argv[0]);
+exit(1);
 }
-fd = open(argv[1], O_RDONLY);
+
+fd = open_and_check(argv[1]);
+read(fd, magic, sizeof(magic));
+close(fd);
+
+print_elf_header(magic);
+
+return (0);
+}
+
+int open_and_check(const char *filename)
+{
+unsigned char magic[4];
+
+int fd = open(filename, O_RDONLY);
 if (fd == -1)
 {
-display_error("Error: Unable to open file");
+perror("open");
+exit(1);
 }
-read_header(fd, &header);
-print_elf_header(header);
-close(fd);
-return (0);
+
+if (read(fd, magic, sizeof(magic)) != sizeof(magic))
+{
+perror("read");
+exit(1);
+}
+
+if (memcmp(magic, ELF_MAGIC, sizeof(magic)) != 0)
+{
+fprintf(stderr, "Not an ELF file\n");
+exit(1);
+}
+
+return (fd);
+}
+
+void print_elf_header(unsigned char *magic)
+{
+printf("ELF Header:\n");
+printf("  Magic:   %02x %02x %02x %02x\n",
+magic[0], magic[1], magic[2], magic[3]);
+printf("  Class:                             %d\n", (magic[4] >> 4) & 0xf);
+printf("  Data:                              %d\n", (magic[4] >> 3) & 0x1);
+printf("  Version:                           %d\n", magic[4] & 0xf);
+printf("  OS/ABI:                            %d\n", magic[5] >> 4);
+printf("  ABI Version:                       %d\n", magic[5] & 0xf);
+printf("  Type:                              %d\n", (magic[6] >> 4) & 0xf);
+printf("  Entry point address:               %x\n",
+((unsigned int)magic[7] << 24) |
+((unsigned int)magic[8] << 16) |
+((unsigned int)magic[9] << 8) |
+((unsigned int)magic[10]));
 }
