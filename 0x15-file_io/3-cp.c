@@ -1,59 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "main.h"
 
 /**
-* main - program that copies the content of a file to another file
-* @argc: num argument
-* @argv: string argument
-* Return: 0
-*/
+ * open_and_check - Opens a file and performs error checking.
+ * @filename: The name of the file to open.
+ * @flags: The flags to use when opening the file.
+ * @mode: The permissions mode to set for the file (if created).
+ * @error_code: The error code to use for exit in case of failure.
+ *
+ * Return: The file descriptor on success, or exit with error code on failure.
+ */
+int open_and_check(
+const char *filename,
+int flags,
+mode_t mode,
+int error_code
+)
+{
+int fd = open(filename, flags, mode);
+if (fd == -1)
+{
+dprintf(STDERR_FILENO, "Error: Can't open or create file %s\n", filename);
+exit(error_code);
+}
+return (fd);
+}
 
+/**
+ * main - Copies the content of a file to another file.
+ * @argc: The number of arguments passed to the program.
+ * @argv: An array of strings containing the arguments.
+ *
+ * Return: 0 on success, or exit with the appropriate error code on failure.
+ */
 int main(int argc, char *argv[])
 {
-int file_from, file_to;
+int source_fd, dest_fd;
 ssize_t num_read, num_written;
-char buf[1024];
+char buffer[1024];
 
 if (argc != 3)
+{
 fprintf(stderr, "Usage: cp file_from file_to\n");
-file_from = open(argv[1], O_RDONLY);
-if (file_from == -1)
-{
-fprintf(stderr, "Error: Can't read from file %s\n", argv[1]);
-exit(98);
+exit(97);
 }
-file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-if (file_to == -1)
+
+source_fd = open_and_check(argv[1], O_RDONLY, 0, 98);
+dest_fd = open_and_check(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644, 99);
+
+while ((num_read = read(source_fd, buffer, 1024)) > 0)
 {
-fprintf(stderr, "Error: Can't write to %s\n", argv[2]);
-close(file_from);
-exit(99);
-}
-while ((num_read = read(file_from, buf, 1024)) > 0)
-{
-num_written = write(file_to, buf, num_read);
+num_written = write(dest_fd, buffer, num_read);
 if (num_written < num_read)
 {
-fprintf(stderr, "Error: Can't write to %s\n", argv[2]);
-close(file_from);
-close(file_to);
+fprintf(stderr, "Error: Can't write to file %s\n", argv[2]);
+close(source_fd);
+close(dest_fd);
 exit(99);
 }
 }
+
 if (num_read == -1)
 {
 fprintf(stderr, "Error: Can't read from file %s\n", argv[1]);
-close(file_from);
-close(file_to);
+close(source_fd);
+close(dest_fd);
 exit(98);
 }
 
-if (close(file_from) == -1)
-fprintf(stderr, "Error: Can't close fd %d\n", file_from);
+if (close(source_fd) == -1)
+fprintf(stderr, "Error: Can't close fd %d\n", source_fd);
 
-if (close(file_to) == -1)
-fprintf(stderr, "Error: Can't close fd %d\n", file_to);
+if (close(dest_fd) == -1)
+fprintf(stderr, "Error: Can't close fd %d\n", dest_fd);
 
 return (0);
 }
