@@ -1,6 +1,9 @@
-#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include "main.h"
 
 char *allocate_buffer(char *file);
 void close_file_descriptor(int fd);
