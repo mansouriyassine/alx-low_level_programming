@@ -22,4 +22,8 @@ struct dlistint_s *next;
 /* Function prototype for print_dlistint */
 size_t print_dlistint(const dlistint_t *h);
 
+/* Function prototype for dlistint_len */
+size_t dlistint_len(const dlistint_t *h);
+
+
 #endif /* LISTS_H */
