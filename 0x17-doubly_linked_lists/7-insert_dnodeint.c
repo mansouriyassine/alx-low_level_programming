@@ -15,7 +15,7 @@ dlistint_t *new_node, *current = *h;
 unsigned int i = 0;
 
 if (idx == 0)
-return add_dnodeint(h, n);
+return (add_dnodeint(h, n));
 
 while (current != NULL)
 {

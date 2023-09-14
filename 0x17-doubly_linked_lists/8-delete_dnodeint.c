@@ -13,7 +13,7 @@ dlistint_t *current = *head, *prev_node = NULL;
 unsigned int i = 0;
 
 if (*head == NULL)
-return -1;
+return (-1);
 
 if (index == 0)
 {
