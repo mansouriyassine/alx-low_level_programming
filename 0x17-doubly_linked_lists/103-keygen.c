@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-unsigned int i, s, l;
+unsigned int i, s;
 size_t n, a;
 char *c = "A-CHRDw87lNS0E9B2TibgpnMVys5XzvtOGJcYLU+4mjW6fxqZeF3Qa1rPhdKIouk";
 char k[7] = "      ";
