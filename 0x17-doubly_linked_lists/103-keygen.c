@@ -2,6 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+/**
+ * main - Generates a unique key based on a
+ * username for a security application.
+ * @argc: Number of command-line arguments.
+ * @argv: Array of command-line arguments.
+ *
+ * Return: 0 on success, 1 on error.
+ */
 int main(int argc, char *argv[])
 {
 unsigned int i, s;
