@@ -4,9 +4,6 @@ CC = gcc
 # Source files
 SRC = main.c school.c
 
-# Object files (derived from SRC)
-OBJ = $(SRC:.c=.o)
-
 # Name of the executable
 NAME = school
 
@@ -17,20 +14,17 @@ CFLAGS = -Wall -Werror -Wextra -pedantic
 all: $(NAME)
 
 # Rule to build the executable
-$(NAME): $(OBJ) m.h
-	$(CC) $(OBJ) -o $(NAME)
-
-# Compiling C files
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(SRC) m.h
+	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
 
 # Rule for cleaning up Emacs and Vim temporary files and the executable
 clean:
-	rm -f *~ $(NAME)
+	/bin/rm -f *~ $(NAME)
 
 # Rule for deleting object files
+# Uses a shell command to find and delete .o files
 oclean:
-	rm -f $(OBJ)
+	/bin/rm -f $(shell find . -type f -name '*.o')
 
 # Rule for full clean (temporary files, executable, and object files)
 fclean: clean oclean
