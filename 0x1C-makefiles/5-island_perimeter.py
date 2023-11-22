@@ -1,37 +1,33 @@
 #!/usr/bin/python3
 
+def calculate_island_perimeter(grid):
+    """
+    Compute the perimeter of an island represented in a grid.
 
-def island_perimeter(grid):
+    Args:
+    grid (list of lists of int): A grid where '1'
+    represents land and '0' represents water.
+
+    Returns:
+    int: The total perimeter of the island.
     """
-    Calculate the perimeter of an island in a grid.
-    :param grid: List of lists of integers where 1
-    represents land and 0 represents water
-    :return: Perimeter of the island
-    """
-    rows, cols = len(grid), len(grid[0])
+    if not grid:
+        return 0
+
+    row_count, col_count = len(grid), len(grid[0])
     perimeter = 0
 
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == 1:
-                if r == 0 or grid[r-1][c] == 0:
-                    perimeter += 1
-                if r == rows-1 or grid[r+1][c] == 0:
-                    perimeter += 1
-                if c == 0 or grid[r][c-1] == 0:
-                    perimeter += 1
-                if c == cols-1 or grid[r][c+1] == 0:
-                    perimeter += 1
+    for row in range(row_count):
+        for col in range(col_count):
+            if grid[row][col] == 1:
+                perimeter += 4
+                if row > 0 and grid[row - 1][col] == 1:
+                    perimeter -= 1
+                if row < row_count - 1 and grid[row + 1][col] == 1:
+                    perimeter -= 1
+                if col > 0 and grid[row][col - 1] == 1:
+                    perimeter -= 1
+                if col < col_count - 1 and grid[row][col + 1] == 1:
+                    perimeter -= 1
 
     return perimeter
-
-
-if __name__ == "__main__":
-    grid = [
-        [0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0],
-        [0, 1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-    ]
-    print(island_perimeter(grid))
