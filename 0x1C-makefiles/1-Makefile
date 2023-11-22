@@ -1,0 +1,18 @@
+# Compiler to be used
+CC = gcc
+
+# Source files
+SRC = main.c school.c
+
+# Name of the executable
+TARGET = school
+
+# Rule for 'all' - default rule
+all: $(TARGET)
+
+# Rule to build the executable
+$(TARGET):
+	$(CC) $(SRC) -o $(TARGET)
+
+# Phony target to prevent conflicts with files of the same name
+.PHONY: all
