@@ -1,0 +1,15 @@
+# Name of the executable
+TARGET = school
+
+# Source files
+SRC = main.c school.c
+
+# Rule for 'all' - default rule
+all: $(TARGET)
+
+# Rule to build the executable
+$(TARGET):
+	gcc $(SRC) -o $(TARGET)
+
+# Phony target to prevent conflicts with files of the same name
+.PHONY: all
