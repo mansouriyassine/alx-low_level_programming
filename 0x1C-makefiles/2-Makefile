@@ -1,0 +1,25 @@
+# Compiler to be used
+CC = gcc
+
+# Source files
+SRC = main.c school.c
+
+# Object files (derived from SRC)
+OBJ = $(SRC:.c=.o)
+
+# Name of the executable
+NAME = school
+
+# Rule for 'all' - default rule
+all: $(NAME)
+
+# Rule to build the executable
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+# Generic rule for object files
+%.o: %.c
+	$(CC) -c $< -o $@
+
+# Phony target to prevent conflicts with files of the same name
+.PHONY: all
