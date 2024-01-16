@@ -3,8 +3,8 @@
 #include "search_algos.h"
 
 /**
- * interpolation_search - Searches for value in sorted array using
- * Interpolation
+ * interpolation_search - Searches for value in sorted array
+ * using Interpolation
  * @array: Pointer to the first element of the array to search in
  * @size: Number of elements in the array
  * @value: Value to search for
@@ -12,12 +12,13 @@
  */
 int interpolation_search(int *array, size_t size, int value)
 {
+size_t low, high, pos;
+
 if (array == NULL)
 return (-1);
 
-size_t low = 0;
-size_t high = size - 1;
-size_t pos;
+low = 0;
+high = size - 1;
 
 while (low <= high && value >= array[low] && value <= array[high])
 {
