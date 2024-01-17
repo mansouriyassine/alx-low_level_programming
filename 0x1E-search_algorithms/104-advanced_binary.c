@@ -23,7 +23,7 @@ printf("\n");
 }
 
 /**
- * advanced_binary_recursive - Recursively searchs for a value in a sorted array.
+ * advanced_binary_recursive - Recursively searchs for a value in array.
  *
  * @array: The sorted integer array.
  * @left: The left index of the current subarray.
@@ -48,12 +48,12 @@ if (array[mid] == value)
 if (mid == left || array[mid - 1] != value)
 return ((int)mid);
 else
-return advanced_binary_recursive(array, left, mid, value);
+return (advanced_binary_recursive(array, left, mid, value));
 }
 else if (array[mid] > value)
-return advanced_binary_recursive(array, left, mid - 1, value);
+return (advanced_binary_recursive(array, left, mid - 1, value));
 else
-return advanced_binary_recursive(array, mid + 1, right, value);
+return (advanced_binary_recursive(array, mid + 1, right, value));
 }
 
 /**
